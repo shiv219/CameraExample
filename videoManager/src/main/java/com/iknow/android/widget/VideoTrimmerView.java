@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,7 +61,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     private int mMaxWidth = VIDEO_FRAMES_WIDTH;
     private Context mContext;
     private RelativeLayout mLinearVideo;
-    private ZVideoView mVideoView;
+    private ExtVideoView mVideoView;
     private ImageView mPlayView;
     private RecyclerView mVideoThumbRecyclerView;
     private RangeSeekBarView mRangeSeekBarView;

@@ -3,12 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29583333333333334" />
+        <entry key="app/src/main/res/layout/activity_recordvideo.xml" value="0.18931159420289856" />
+        <entry key="app/src/main/res/layout/camrt.xml" value="0.18931159420289856" />
         <entry key="app/src/main/res/layout/fragment.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/fragment_camera2_basic.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_video.xml" value="0.17447916666666666" />
+        <entry key="app/src/main/res/layout/main.xml" value="0.18931159420289856" />
+        <entry key="app/src/main/res/layout/main2.xml" value="0.18931159420289856" />
         <entry key="videoManager/src/main/res/layout/activity_video_recording.xml" value="0.16770833333333332" />
         <entry key="videoManager/src/main/res/layout/activity_video_select.xml" value="0.16770833333333332" />
         <entry key="videoManager/src/main/res/layout/activity_video_trim.xml" value="0.16770833333333332" />
         <entry key="videoManager/src/main/res/layout/video_select_gridview_item.xml" value="0.16770833333333332" />
+        <entry key="videoManager/src/main/res/layout/video_trimmer_view.xml" value="0.18931159420289856" />
       </map>
     </option>
   </component>

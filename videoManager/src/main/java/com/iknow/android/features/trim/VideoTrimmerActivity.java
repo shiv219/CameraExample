@@ -101,37 +101,9 @@ public class VideoTrimmerActivity extends BaseActivity implements VideoTrimListe
             ToastUtil.longShow(this, getResources().getString(R.string.failed));
             return;
         }
-//        ToastUtil.longShow(this, getString(R.string.trimmed_done));
         long size = getFileSize(in);
         Log.d("VIDEO_TRIMMED_SIZE", String.valueOf(size));
         setData(in, duration);
-/*//    TODO: please handle your trimmed video url here!!!
-        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String out = StorageUtil.getCacheDir() + "/" + timeStamp + COMPRESSED_VIDEO_FILE_NAME;
-        buildDialog(getResources().getString(R.string.compressing)).show();
-        VideoCompressor.compress(this, in, out, new VideoCompressListener() {
-            @Override
-            public void onSuccess(String message) {
-                if (mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
-                long compressedSize = getFileSize(out);
-                Log.d("VIDEO_COMPRESSED_SIZE", String.valueOf(compressedSize));
-                ToastUtil.longShow(context, String.valueOf(compressedSize));
-//                setResult(out,duration);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                if (mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
-                ToastUtil.longShow(context, getString(R.string.failed_compressing));
-            }
-
-            @Override
-            public void onFinish() {
-                if (mProgressDialog.isShowing()) mProgressDialog.dismiss();
-            }
-        });*/
     }
 
     @Override
@@ -187,7 +159,6 @@ public class VideoTrimmerActivity extends BaseActivity implements VideoTrimListe
     VideoCompressListener videoCompressListener = new VideoCompressListener() {
         @Override
         public void onSuccess(String message) {
-//            if (mProgressDialog.isShowing()) mProgressDialog.dismiss();
             long compressedSize = getFileSize(copressedOutput);
             ToastUtil.longShow(context, String.valueOf(compressedSize));
             setData(copressedOutput, null);

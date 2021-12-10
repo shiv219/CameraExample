@@ -17,13 +17,11 @@ import androidx.fragment.app.FragmentActivity;
 import com.iknow.android.R;
 import com.iknow.android.databinding.ActivityVideoSelectBinding;
 import com.iknow.android.features.common.ui.BaseActivity;
-import com.iknow.android.features.record.VideoRecordActivity;
 import com.iknow.android.features.record.view.PreviewSurfaceView;
 import com.iknow.android.features.trim.VideoTrimmerActivity;
 import com.iknow.android.utils.StorageUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import iknow.android.utils.FileUtil;
 import iknow.android.utils.callback.SimpleCallback;
 
 /**
@@ -95,11 +93,6 @@ public class VideoSelectActivity extends BaseActivity implements View.OnClickLis
 
         mBinding.cameraPreviewLy.setOnClickListener(v -> {
             openVideoCapture();
-            //            VideoRecordActivity.call(context);
-////            hideOtherView();
-////            mBinding.realCameraPreviewLy.findViewById(R.id.iv_back).setOnClickListener(view -> {
-////                resetHideOtherView();
-////            });
         });
     }
 
