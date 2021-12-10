@@ -271,6 +271,11 @@ public abstract class CameraVideoFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void onPause() {
         closeCamera();
         stopBackgroundThread();
@@ -309,20 +314,20 @@ public abstract class CameraVideoFragment extends BaseFragment {
      */
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestPermission() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), mPermissions[0]) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), mPermissions[1]) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), mPermissions[2]) != PackageManager.PERMISSION_GRANTED
-                /*|| ActivityCompat.checkSelfPermission(getActivity(), mPermissions[3]) != PackageManager.PERMISSION_GRANTED*/
-        ) {
-            requestPermissions(mPermissions, PERMISSION_REQUEST_CODE);
-        } else {
+//        if (ActivityCompat.checkSelfPermission(getActivity(), mPermissions[0]) != PackageManager.PERMISSION_GRANTED
+//                || ActivityCompat.checkSelfPermission(getActivity(), mPermissions[1]) != PackageManager.PERMISSION_GRANTED
+//                || ActivityCompat.checkSelfPermission(getActivity(), mPermissions[2]) != PackageManager.PERMISSION_GRANTED
+//                /*|| ActivityCompat.checkSelfPermission(getActivity(), mPermissions[3]) != PackageManager.PERMISSION_GRANTED*/
+//        ) {
+//            requestPermissions(mPermissions, PERMISSION_REQUEST_CODE);
+//        } else {
             //You already have permissions do your Code here
             if (mTextureView.isAvailable()) {
                 openCamera(mTextureView.getWidth(), mTextureView.getHeight());
             } else {
                 mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
             }
-        }
+//        }
     }
 
 
@@ -575,7 +580,7 @@ public abstract class CameraVideoFragment extends BaseFragment {
         if (null == activity) {
             return;
         }
-        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+//        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         /**
@@ -586,14 +591,14 @@ public abstract class CameraVideoFragment extends BaseFragment {
          * set output file in media recorder
          */
         mMediaRecorder.setOutputFile(mCurrentFile.getAbsolutePath());
-        CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_480P);
+        CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
         mMediaRecorder.setVideoFrameRate(profile.videoFrameRate);
         mMediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
         mMediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        mMediaRecorder.setAudioEncodingBitRate(profile.audioBitRate);
-        mMediaRecorder.setAudioSamplingRate(profile.audioSampleRate);
+//        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+//        mMediaRecorder.setAudioEncodingBitRate(profile.audioBitRate);
+//        mMediaRecorder.setAudioSamplingRate(profile.audioSampleRate);
 
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         switch (mSensorOrientation) {
