@@ -17,6 +17,13 @@ inline fun AppCompatActivity.requestPermissions(
     PermissionManager.requestPermissions(this, *permissions) { this.requestBlock() }
 }
 
+fun AppCompatActivity.checkPermission(permission: String): Boolean {
+    val checkSelfPermission = ContextCompat.checkSelfPermission(this, permission)
+    if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
+        return false
+    }
+    return true
+}
 /**
  * @param permissions vararg of all the permissions for request.
  * @param requestBlock block constructing [PermissionRequest] object for permission request.
