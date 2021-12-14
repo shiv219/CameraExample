@@ -14,6 +14,10 @@ import com.contest.runtimepermission.permission.PermissionManager;
 import com.contest.runtimepermission.permission.PermissionRequest;
 import com.contest.runtimepermission.permission.PermissionResult;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.homehub_cam.listener.NavigationListener;
+import com.homehub_cam.ui.fragments.BaseFragment;
+import com.homehub_cam.ui.fragments.LauncherFragment;
+import com.homehub_cam.ui.fragments.PhotoFragment;
 import com.homehub_cam.ui.fragments.VideoFragment;
 import com.homehub_cam.utils.Utils;
 
@@ -21,9 +25,11 @@ import org.jetbrains.annotations.Nullable;
 
 import kotlin.Unit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int CAMERA_AUDIO_PERMISSION = 1001;
+    public static final int Image_Fragment = 22;
+    public static final int Video_Fragment = 33;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +37,9 @@ public class MainActivity extends AppCompatActivity {
         checkPermissions();
     }
 
-    private void attachFragment() {
+    private void attachFragment(BaseFragment fragment, String tag) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        VideoFragment mFragment = VideoFragment.newInstance(url -> {
-            Log.d(TAG + ": VIDEO_URL", url);
-        });
-        ft.replace(R.id.frame, mFragment);
+        ft.add(R.id.frame, fragment).addToBackStack(tag);
         ft.commit();
     }
 
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this,
                         Manifest.permission.RECORD_AUDIO)
         ) {
-            attachFragment();
+            attachFragment(new LauncherFragment(this),"Launcher");
         } else {
             PermissionRequest permissionRequest = new PermissionRequest();
             permissionRequest.setRequestCode(1);
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private Unit success(PermissionResult permissionResult) {
         if (permissionResult instanceof PermissionResult.PermissionGranted) {
             if (permissionResult.getRequestCode() == CAMERA_AUDIO_PERMISSION) {
-                attachFragment();
+                attachFragment(new LauncherFragment(this),"Launcher");
             }
         } else if (permissionResult instanceof PermissionResult.PermissionDenied) {
             // left intentionally
@@ -111,5 +114,17 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
         return Unit.INSTANCE;
+    }
+
+    @Override
+    public void navigate(int fragment) {
+        if(fragment == Video_Fragment){
+            VideoFragment mFragment = VideoFragment.newInstance(url -> {
+                Log.d(TAG + ": VIDEO_URL", url);
+            });
+            attachFragment(mFragment,"Video_Frag");
+        } else if (fragment == Image_Fragment){
+            attachFragment(new PhotoFragment(),"Photo_Frag");
+        }
     }
 }

@@ -43,6 +43,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation project(path: ':android-ffmpeg')
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     // CameraX core library
     def camerax_version = '1.0.0-rc03'
