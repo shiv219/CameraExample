@@ -30,8 +30,11 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -85,6 +88,7 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
 
     private CameraDevice mCameraDevice;
     private CameraCaptureSession mPreviewSession;
+    private ProgressBar spinner;
 
     private Size mPreviewSize;
     private Size mVideoSize;
@@ -97,16 +101,15 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
     private File mCurrentFile;
     private Context mCtx;
     private AutoFitTextureView mTextureView;
-    private TextView mRecordVideo;
+    private RelativeLayout mRecordVideo;
     private VideoView mVideoView;
-    private TextView mPlayVideo, vClose;
-    private TextView vCounter, vDone, vRetake;
+    private ImageView mPlayVideo, vClose, vDone, vRetake;
+    private TextView counter;
     private OnMediaSubmit onMediaSubmit;
     private Group recorderGroup, playerGroup;
 
     private String mOutputFilePath;
     private CountDownTimer timer;
-    private LinearLayout vCounterLayout;
 
 
     public VideoFragment() {
@@ -168,14 +171,14 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
         mTextureView = v.findViewById(R.id.mTextureView);
         mRecordVideo = v.findViewById(R.id.mRecordVideo);
         mVideoView = v.findViewById(R.id.mVideoView);
+        spinner = v.findViewById(R.id.progressBar);
         mPlayVideo = v.findViewById(R.id.mPlayVideo);
-        vCounter = v.findViewById(R.id.counter);
+        counter = v.findViewById(R.id.counter);
         playerGroup = v.findViewById(R.id.videoPlayerGroup);
         recorderGroup = v.findViewById(R.id.videoRecorderGroup);
         vDone = v.findViewById(R.id.done);
         vRetake = v.findViewById(R.id.retake);
         vClose = v.findViewById(R.id.close);
-        vCounterLayout = v.findViewById(R.id.counterLayout);
         setOnClickListener();
     }
 
@@ -192,7 +195,8 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.mRecordVideo: {
                 if (mIsRecordingVideo) {
-                    vCounter.setText("00:00");
+                    counter.setText("0");
+                    spinner.setProgress(60);
                     try {
                         stopRecordingVideo();
                         prepareVideoPlayerViews();
@@ -205,7 +209,6 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
 
                 } else {
                     startRecordingVideo();
-                    mRecordVideo.setText("STOP");
                     mOutputFilePath = getCurrentFile().getAbsolutePath();
                     setCountDownTimer(true);
                 }
@@ -253,11 +256,12 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
     }
 
     private void prepareForRetake() {
-        vCounter.setTextColor(ContextCompat.getColor(mCtx, R.color.white));
-        vCounter.setText("00:" + MAX_RECORDING_TIME_IN_MILLIS / 1000);
+        counter.setTextColor(ContextCompat.getColor(mCtx, R.color.white));
+        counter.setText("" + MAX_RECORDING_TIME_IN_MILLIS / 1000);
+        spinner.setProgress(60);
         playerGroup.setVisibility(View.GONE);
         recorderGroup.setVisibility(View.VISIBLE);
-        mRecordVideo.setText("RECORD");
+//        mRecordVideo.setText("RECORD");
         timer.cancel();
         openCamera(mTextureView.getWidth(), mTextureView.getHeight());
     }
@@ -290,21 +294,22 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
     }
 
     private void setCountDownTimer(boolean setVideoPlayer) {
-        vCounterLayout.setVisibility(View.VISIBLE);
         timer = new CountDownTimer(MAX_RECORDING_TIME_IN_MILLIS, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 int remainingSec = (int) millisUntilFinished / 1000;
                 if (remainingSec < 11) {
-                    vCounter.setTextColor(ContextCompat.getColor(mCtx, R.color.red));
+                    counter.setTextColor(ContextCompat.getColor(mCtx, R.color.red));
                 } else {
-                    vCounter.setTextColor(ContextCompat.getColor(mCtx, R.color.white));
+                    counter.setTextColor(ContextCompat.getColor(mCtx, R.color.black));
                 }
-                vCounter.setText("00:" + remainingSec);
+                counter.setText("" + remainingSec);
+                spinner.setProgress(remainingSec);
             }
 
             public void onFinish() {
-                vCounter.setText("00:00");
+                counter.setText("0");
+                spinner.setProgress(60);
                 try {
                     if (setVideoPlayer) {
                         stopRecordingVideo();

@@ -3,10 +3,14 @@ package com.homehub_cam;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.contest.runtimepermission.permission.PermissionExtensionsKt;
@@ -34,6 +38,30 @@ public class MainActivity extends AppCompatActivity implements NavigationListene
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
         checkPermissions();
+        getSupportFragmentManager().addOnBackStackChangedListener(
+                () -> {
+                    FragmentManager fm = getSupportFragmentManager();
+                    if (fm != null) {
+                        int backStackCount = fm.getBackStackEntryCount();
+                        if (backStackCount == 0) {
+                            showStatusBar();
+                        }
+                    }
+                });
+    }
+
+    public void showStatusBar() {
+        View decorView = getWindow().getDecorView();
+        // Show Status Bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
+    public void hideStatusBar() {
+        View decorView = getWindow().getDecorView();
+        // Hide Status Bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void attachFragment(BaseFragment fragment, String tag) {
@@ -117,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationListene
 
     @Override
     public void navigate(int fragment) {
+        hideStatusBar();
         if (fragment == Video_Fragment) {
             VideoFragment mFragment = VideoFragment.newInstance(url -> {
                 Log.d(TAG + ": VIDEO_URL", url);

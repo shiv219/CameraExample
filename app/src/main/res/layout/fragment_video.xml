@@ -7,18 +7,7 @@
     android:background="@color/black"
     android:keepScreenOn="true">
 
-    <TextView
-        android:id="@+id/close"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:elevation="5dp"
-        android:padding="5dp"
-        android:background="@color/shadow_color"
-        android:text="close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.homehub_cam.ui.views.AutoFitTextureView
         android:id="@+id/mTextureView"
@@ -29,60 +18,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/counterLayout"
+
+    <RelativeLayout
+        android:id="@+id/mRecordVideo"
         android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/mRecordVideo"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Timer"
-            android:background="@color/shadow_color"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_margin="20dp"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="16dp"
-            android:visibility="gone" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:indeterminate="false"
+            android:layout_centerInParent="true"
+            android:progressDrawable="@drawable/custom_progressbar_drawable"
+            android:background="@drawable/shape"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="60"
+            android:progress="60" />
+
+        <ImageView
+            android:id="@+id/txtProgress"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:tint="@color/white"
+            android:src="@drawable/ic_baseline_fiber_manual_record_24"
+            android:layout_centerInParent="true"/>
         <TextView
             android:id="@+id/counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="00:60"
-            android:background="@color/shadow_color"
-            android:textSize="16sp"
-            android:layout_margin="20dp"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="16dp"
-            android:textColor="@color/white" />
+            android:text="60"
+            android:textSize="14sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black" />
+    </RelativeLayout>
 
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/mRecordVideo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="RECORD"
-        android:textSize="16sp"
-        android:layout_margin="20dp"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="16dp"
-        android:textColor="@color/white"
-        android:background="@color/shadow_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <VideoView
         android:id="@+id/mVideoView"
@@ -94,51 +70,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <ImageView
         android:id="@+id/retake"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:gravity="center"
-        android:text="RETAKE"
-        android:textSize="16sp"
+        android:padding="8dp"
         android:layout_margin="20dp"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="16dp"
-        android:background="@color/shadow_color"
-        android:textColor="@color/white"
+        android:src="@drawable/ic_baseline_refresh_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <ImageView
         android:id="@+id/done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_margin="20dp"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="16dp"
         android:gravity="center"
-        android:background="@color/shadow_color"
-        android:text="DONE"
-        android:textColor="@color/white"
+        android:src="@drawable/ic_baseline_check_circle_outline_24"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
+    <ImageView
         android:id="@+id/mPlayVideo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="16dp"
-        android:text="PLAY"
-        android:background="@color/shadow_color"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
         android:visibility="gone"
-        android:textColor="@color/white"
+        android:src="@drawable/ic_baseline_play_circle_outline_24"
+        android:layout_centerInParent="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/videoPlayerGroup"
@@ -148,11 +112,21 @@
         app:constraint_referenced_ids="retake,mPlayVideo,done,mVideoView"
         tools:visibility="visible" />
 
+    <ImageView
+        android:id="@+id/close"
+        android:layout_margin="20dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/videoRecorderGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="mTextureView,counterLayout"
+        app:constraint_referenced_ids="mTextureView"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
