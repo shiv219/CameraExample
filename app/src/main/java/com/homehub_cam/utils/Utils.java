@@ -29,6 +29,29 @@ import java.util.*;
 
 public class Utils {
 
+    public static void writeCoordinatesIntoFile (File photo, double latitude, double longitude) throws IOException{
+        ExifInterface exif = null;
+
+        try{
+            exif = new ExifInterface(photo.getCanonicalPath());
+            if (exif != null) {
+                double latitu = latitude;
+                double longitu = longitude;
+                double alat = Math.abs(latitu);
+                double along = Math.abs(longitu);
+                exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, String.valueOf(alat));
+                exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, String.valueOf(along));
+                exif.saveAttributes();
+                /*String lati = exif.getAttribute (ExifInterface.TAG_GPS_LATITUDE);
+                String longi = exif.getAttribute (ExifInterface.TAG_GPS_LONGITUDE);
+                Log.v("latiResult", ""+ lati);
+                Log.v("longiResult", ""+ longi);*/
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         int height = options.outHeight;

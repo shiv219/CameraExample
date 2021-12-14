@@ -1,6 +1,7 @@
 package com.homehub_cam.ui.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -53,9 +54,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -72,6 +75,7 @@ public class PhotoFragment extends BaseFragment
     private OnMediaSubmit onMediaSubmit;
     private ImageView vImageViewer;
     private TextView vDone, vRetake, vCross, vCaptureImage;
+    private Context mCtx;
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -205,7 +209,7 @@ public class PhotoFragment extends BaseFragment
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-            mFile = settingFileStructure();
+            mFile = getFileLocation();
 //            mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
             Image image = reader.acquireNextImage();
             if (image != null) {
@@ -373,9 +377,10 @@ public class PhotoFragment extends BaseFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_photo, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_photo, container, false);
+        mCtx = getActivity();
+        return view;
     }
 
     @Override
@@ -425,15 +430,22 @@ public class PhotoFragment extends BaseFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFile = settingFileStructure();
+        mFile = getFileLocation();
     }
 
-    private File settingFileStructure() {
-//        File dir = Utility.createDir(Constants.DIR_DO_NO_DELETE);
-        String fileName = System.currentTimeMillis() + "." + "jpg";
-//        File mediaFile = Utility.createFile(fileName);
-        //Create File
-        return null;
+
+    private File getFileLocation() {
+        File mediaStorageDir = new File(mCtx.getFilesDir(), "HOME_HUB");
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("MyCameraApp", "failed to create directory");
+                return null;
+            }
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator +
+                "IMAGE_" + timeStamp + ".jpg");
     }
 
 
@@ -458,29 +470,6 @@ public class PhotoFragment extends BaseFragment
         closeCamera();
         stopBackgroundThread();
         super.onPause();
-    }
-
-    private void requestCameraPermission() {
-        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA},
-                    REQUEST_CAMERA_PERMISSION);
-        } else {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                //Permission not grated
-            } else {
-                //Permission Granted
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 
     /**
@@ -598,12 +587,8 @@ public class PhotoFragment extends BaseFragment
     /**
      * Opens the camera specified by {@link PhotoFragment#mCameraId}.
      */
+    @SuppressLint("MissingPermission")
     private void openCamera(int width, int height) {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            requestCameraPermission();
-            return;
-        }
         setUpCameraOutputs(width, height);
         configureTransform(width, height);
         Activity activity = getActivity();
@@ -921,9 +906,8 @@ public class PhotoFragment extends BaseFragment
             public void run() {
                 vPictureGroup.setVisibility(View.GONE);
                 vViewerGroup.setVisibility(View.VISIBLE);
-//                Utility.loadImage(getContext(),vImageViewer,mFile.getAbsolutePath(),null,false);
-//                vImageViewer.setImageBitmap(b);
-//                vImageViewer.setRotation(90);
+                vImageViewer.setImageBitmap(b);
+                vImageViewer.setRotation(90);
             }
         });
     }
@@ -949,4 +933,5 @@ public class PhotoFragment extends BaseFragment
             e.printStackTrace();
         }
     }
+
 }

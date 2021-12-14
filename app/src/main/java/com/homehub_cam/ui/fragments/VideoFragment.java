@@ -226,7 +226,7 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
                 break;
             }
             case R.id.close: {
-//                Utility.popBackStack(mCtx);
+                getActivity().getSupportFragmentManager().popBackStack();
                 break;
             }
         }
@@ -454,7 +454,7 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
         if (null == activity) {
             return;
         }
-//        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mCurrentFile = getFileLocation();
@@ -466,9 +466,11 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener,
         mMediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
 
-        /* mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mMediaRecorder.setAudioEncodingBitRate(profile.audioBitRate);
-        mMediaRecorder.setAudioSamplingRate(profile.audioSampleRate);*/
+        mMediaRecorder.setAudioSamplingRate(profile.audioSampleRate);
+
+//        mMediaRecorder.setLocation();
 
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         switch (mSensorOrientation) {

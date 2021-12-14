@@ -19,7 +19,6 @@ import com.homehub_cam.ui.fragments.BaseFragment;
 import com.homehub_cam.ui.fragments.LauncherFragment;
 import com.homehub_cam.ui.fragments.PhotoFragment;
 import com.homehub_cam.ui.fragments.VideoFragment;
-import com.homehub_cam.utils.Utils;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationListene
                         MainActivity.this,
                         Manifest.permission.RECORD_AUDIO)
         ) {
-            attachFragment(new LauncherFragment(this),"Launcher");
+            attachFragment(new LauncherFragment(this), "Launcher");
         } else {
             PermissionRequest permissionRequest = new PermissionRequest();
             permissionRequest.setRequestCode(1);
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationListene
     private Unit success(PermissionResult permissionResult) {
         if (permissionResult instanceof PermissionResult.PermissionGranted) {
             if (permissionResult.getRequestCode() == CAMERA_AUDIO_PERMISSION) {
-                attachFragment(new LauncherFragment(this),"Launcher");
+                attachFragment(new LauncherFragment(this), "Launcher");
             }
         } else if (permissionResult instanceof PermissionResult.PermissionDenied) {
             // left intentionally
@@ -118,13 +117,16 @@ public class MainActivity extends AppCompatActivity implements NavigationListene
 
     @Override
     public void navigate(int fragment) {
-        if(fragment == Video_Fragment){
+        if (fragment == Video_Fragment) {
             VideoFragment mFragment = VideoFragment.newInstance(url -> {
                 Log.d(TAG + ": VIDEO_URL", url);
             });
-            attachFragment(mFragment,"Video_Frag");
-        } else if (fragment == Image_Fragment){
-            attachFragment(new PhotoFragment(),"Photo_Frag");
+            attachFragment(mFragment, "Video_Frag");
+        } else if (fragment == Image_Fragment) {
+            PhotoFragment mFragment = PhotoFragment.newInstance(url -> {
+                Log.d(TAG + ": IMAGE_URL", url);
+            });
+            attachFragment(mFragment, "Photo_Frag");
         }
     }
 }
