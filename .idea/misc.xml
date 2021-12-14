@@ -5,6 +5,8 @@
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22962962962962963" />
+        <entry key="app/src/main/res/drawable/ic_baseline_cached_24.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/drawable/ic_baseline_fiber_manual_record_24.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22962962962962963" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29583333333333334" />
         <entry key="app/src/main/res/layout/activity_recordvideo.xml" value="0.18931159420289856" />
@@ -12,7 +14,7 @@
         <entry key="app/src/main/res/layout/fragment.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/fragment_camera2_basic.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_photo.xml" value="0.1793478260869565" />
-        <entry key="app/src/main/res/layout/fragment_video.xml" value="0.17447916666666666" />
+        <entry key="app/src/main/res/layout/fragment_video.xml" value="0.33" />
         <entry key="app/src/main/res/layout/main.xml" value="0.18931159420289856" />
         <entry key="app/src/main/res/layout/main2.xml" value="0.18931159420289856" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22962962962962963" />

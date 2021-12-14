@@ -74,7 +74,7 @@ public class PhotoFragment extends BaseFragment
 
     private OnMediaSubmit onMediaSubmit;
     private ImageView vImageViewer;
-    private TextView vDone, vRetake, vCross, vCaptureImage;
+    private ImageView vDone, vRetake, vCross, vCaptureImage;
     private Context mCtx;
 
     static {
